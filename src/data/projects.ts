@@ -1,15 +1,27 @@
-export const projects = [
+import type { Project } from "../types/project";
+
+export const projects: Project[] = [
   {
-    title: "AI Chat Assist",
+    title: "AI Chat Assist Platform",
     role: "Lead Frontend Developer",
-    stack: ["React", "Tailwind", "TypeScript", "Axios"],
+    stack: ["React", "Tailwind", "TypeScript", "Node.js", "MongoDB"],
     description:
-      "AI-powered chatbot platform for WhatsApp and web, enabling 24/7 automated customer support.",
-    achievements: [
-      "Built theming, skeleton loaders, and typing effects.",
-      "Reduced perceived load time by 30% using lazy loading.",
+      "AI-powered customer support platform with multichannel integration (Web, WhatsApp, Instagram) and real-time analytics dashboard.",
+    features: [
+      "24/7 AI-Powered Customer Support",
+      "Lead Generation & Qualification",
+      "Drag-and-Drop Flow Builder",
+      "Real-Time Analytics Dashboard",
+      "Multi-Channel Integration",
+      "Automated Follow-Ups",
     ],
-    liveUrl: "#",
+    achievements: [
+      "Reduced manual support workload by 60%",
+      "Implemented scalable architecture handling 10K+ daily conversations",
+      "Built drag-and-drop flow designer with React DnD",
+      "Integrated real-time analytics with WebSocket",
+    ],
+    liveUrl: "https://www.aichatassist.com",
     codeUrl: "#",
   },
   {

@@ -3,25 +3,144 @@ import { motion } from 'framer-motion'
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-12">
-      <div className="container">
-        <h2 className="text-2xl font-bold">Projects</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p, i) => (
-            <motion.article key={p.title} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} viewport={{ once: true }} className="p-5 rounded-xl glass border border-white/5 hover:shadow-lg hover:-translate-y-1 transition">
-              <h3 className="font-semibold text-lg">{p.title}</h3>
-              <p className="text-sm text-slate-300 mt-2">{p.description}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {p.stack.map((s) => <span key={s} className="text-xs px-2 py-1 bg-white/5 rounded">{s}</span>)}
-              </div>
-              <div className="mt-4 text-sm text-slate-400">
-                <ul className="list-disc pl-5 space-y-1">
-                  {p.achievements.map((a) => <li key={a}>{a}</li>)}
-                </ul>
-              </div>
-              <div className="mt-4 flex gap-3">
-                <a className="text-sm text-cyan-300 hover:underline" href={p.liveUrl}>Live</a>
-                <a className="text-sm text-slate-400 hover:underline" href={p.codeUrl}>Code</a>
+    <section id="projects" className="py-24 relative">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-glow opacity-40" />
+      
+      <div className="container relative">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false, amount: 0.3 }}
+          className="text-center"
+        >
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-4xl md:text-5xl font-bold bg-gradient-brand text-transparent bg-clip-text"
+          >
+            Featured Projects
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-6 text-lg text-neutral-light dark:text-neutral-dark max-w-2xl mx-auto"
+          >
+            Showcasing my experience in building modern web applications with focus on user experience and scalable architecture.
+          </motion.p>
+        </motion.div>
+
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, i) => (
+            <motion.article 
+              key={project.title} 
+              initial={{ opacity: 0, y: 30 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.5, delay: i * 0.1 }} 
+              viewport={{ once: false, amount: 0.3 }}
+              whileHover={{ y: -5 }}
+              className="group relative"
+            >
+              {/* Card background with glassmorphism */}
+              <motion.div 
+                className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl dark:shadow-black/20"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: false, amount: 0.5 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              />
+              
+              {/* Decorative gradient circles */}
+              <motion.div 
+                className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-brand rounded-full opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500"
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 0 }}
+                viewport={{ once: false, amount: 0.5 }}
+                whileHover={{ opacity: 0.1, scale: 1.2 }}
+                transition={{ duration: 0.8 }}
+              />
+              <motion.div 
+                className="absolute -bottom-4 -left-4 w-32 h-32 bg-brand-cyan rounded-full opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500"
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 0 }}
+                viewport={{ once: false, amount: 0.5 }}
+                whileHover={{ opacity: 0.1, scale: 1.2 }}
+                transition={{ duration: 0.8 }}
+              />
+              
+              {/* Content */}
+              <div className="relative p-8">
+                <div className="flex flex-col h-full">
+                  <h3 className="text-2xl font-bold bg-gradient-brand text-transparent bg-clip-text">
+                    {project.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-neutral-light/90 dark:text-neutral-dark/90 leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.stack.map((tech) => (
+                      <span 
+                        key={tech} 
+                        className="text-xs px-3 py-1 rounded-full bg-white/[0.03] dark:bg-white/[0.05] border border-white/10 text-brand-light"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {'features' in project && (
+                    <div className="mt-6">
+                      <h4 className="font-semibold text-brand-cyan">Key Features</h4>
+                      <ul className="mt-3 grid grid-cols-2 gap-3">
+                        {project.features?.map((feature) => (
+                          <li key={feature} className="text-xs text-neutral-light/80 dark:text-neutral-dark/80 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-gradient-brand flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="mt-6">
+                    <h4 className="font-semibold text-brand-cyan">Achievements</h4>
+                    <ul className="mt-3 space-y-2">
+                      {project.achievements.map((achievement) => (
+                        <li 
+                          key={achievement} 
+                          className="text-sm text-neutral-light/80 dark:text-neutral-dark/80 pl-4 relative before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-gradient-brand before:rounded-full"
+                        >
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-8 flex items-center gap-4">
+                    <a 
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer" 
+                      className="flex-1 text-center text-sm font-medium px-4 py-2.5 rounded-xl bg-gradient-brand text-white shadow-lg shadow-brand-light/20 hover:-translate-y-0.5 transition-transform"
+                    >
+                      View Live
+                    </a>
+                    <a 
+                      href={project.codeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer" 
+                      className="flex-1 text-center text-sm font-medium px-4 py-2.5 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/10 hover:bg-white/[0.05] transition-colors"
+                    >
+                      View Code
+                    </a>
+                  </div>
+                </div>
               </div>
             </motion.article>
           ))}
