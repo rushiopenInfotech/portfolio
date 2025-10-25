@@ -66,3 +66,305 @@
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
+/* Magnetic Button Animations */
+.magnetic-button {
+  position: relative;
+  padding: 1.5rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 200px;
+  z-index: 1;
+  border-radius: 0.5rem;
+}
+
+.magnetic-content {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.particles-field {
+  position: absolute;
+  inset: -100px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: particleFloat var(--duration, 2s) infinite ease-in-out;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.magnetic-button:hover .particles-field {
+  opacity: 1;
+}
+
+.magnetic-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(123, 75, 255, 0.3);
+}
+
+.magnetic-button:active {
+  transform: scale(0.95);
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translate(var(--x, 0), var(--y, 0)) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(calc(var(--x) * -0.5), calc(var(--y) * -0.5)) scale(1);
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--x, 0), var(--y, 0)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particlePulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+/* Enhanced magnetic effects */
+.magnetic-button::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #7B4BFF, #4B8CFF, #7B4BFF);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.magnetic-button:hover::before {
+  opacity: 0.3;
+}
+
+.magnetic-button::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(45deg, transparent, rgba(123, 75, 255, 0.1), transparent);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -2;
+  animation: magneticPulse 2s infinite;
+}
+
+.magnetic-button:hover::after {
+  opacity: 1;
+}
+
+@keyframes magneticPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+/* Particle variations */
+.particle:nth-child(3n) {
+  background: #4B8CFF;
+  animation-delay: 0.2s;
+}
+
+.particle:nth-child(5n) {
+  background: #7B4BFF;
+  animation-delay: 0.4s;
+}
+
+.particle:nth-child(7n) {
+  background: #00D4FF;
+  animation-delay: 0.6s;
+}
+
+/* Magnetic field distortion effect */
+.magnetic-button:hover .particles-field {
+  filter: blur(0.5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .magnetic-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    min-width: 150px;
+  }
+
+  .particles-field {
+    inset: -50px;
+  }
+}
+
+/* Magnetic Link Animations */
+.magnetic-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 120px;
+  z-index: 1;
+}
+
+.magnetic-link .magnetic-content {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.magnetic-link .particles-field {
+  position: absolute;
+  inset: -75px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.magnetic-link:hover .particles-field {
+  opacity: 1;
+}
+
+.magnetic-link:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 0 30px rgba(123, 75, 255, 0.2);
+}
+
+.magnetic-link:active {
+  transform: scale(0.95) translateY(0);
+}
+
+.magnetic-link::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, rgba(123, 75, 255, 0.3), rgba(75, 140, 255, 0.3), rgba(123, 75, 255, 0.3));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.magnetic-link:hover::before {
+  opacity: 0.4;
+}
+
+.magnetic-link::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  background: linear-gradient(45deg, transparent, rgba(123, 75, 255, 0.1), transparent);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -2;
+  animation: magneticPulse 2.5s infinite;
+}
+
+.magnetic-link:hover::after {
+  opacity: 1;
+}
+
+/* Link-specific particle styling */
+.magnetic-link .particle {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.magnetic-link:hover .particles-field {
+  filter: blur(0.3px);
+}
+
+/* Responsive adjustments for links */
+@media (max-width: 768px) {
+  .magnetic-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+
+  .magnetic-link .particles-field {
+    inset: -40px;
+  }
+}
+
+/* Magnetic skill cards */
+.magnetic-card {
+  position: relative;
+  display: block;
+  border-radius: 1rem;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.magnetic-card .particles-field {
+  position: absolute;
+  inset: -80px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.magnetic-card:hover .particles-field {
+  opacity: 1;
+  filter: blur(0.4px);
+}
+
+.magnetic-card:hover {
+  box-shadow: 0 25px 60px rgba(80, 56, 237, 0.25);
+}
+
+.magnetic-card .particle {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 6px rgba(123, 75, 255, 0.35);
+}
+

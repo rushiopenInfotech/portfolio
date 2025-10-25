@@ -1,21 +1,22 @@
 import { projects } from '../data/projects'
 import { motion } from 'framer-motion'
+import MagneticLink from './MagneticLink'
 
 export default function Projects() {
   return (
     <section id="projects" className="py-24 relative">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-glow opacity-40" />
-      
+
       <div className="container relative">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false, amount: 0.3 }}
           className="text-center"
         >
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
@@ -24,7 +25,7 @@ export default function Projects() {
           >
             Featured Projects
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
@@ -37,26 +38,26 @@ export default function Projects() {
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
-            <motion.article 
-              key={project.title} 
-              initial={{ opacity: 0, y: 30 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.5, delay: i * 0.1 }} 
+            <motion.article
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               viewport={{ once: false, amount: 0.3 }}
               whileHover={{ y: -5 }}
               className="group relative"
             >
               {/* Card background with glassmorphism */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl dark:shadow-black/20"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: false, amount: 0.5 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               />
-              
+
               {/* Decorative gradient circles */}
-              <motion.div 
+              <motion.div
                 className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-brand rounded-full opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500"
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0 }}
@@ -64,7 +65,7 @@ export default function Projects() {
                 whileHover={{ opacity: 0.1, scale: 1.2 }}
                 transition={{ duration: 0.8 }}
               />
-              <motion.div 
+              <motion.div
                 className="absolute -bottom-4 -left-4 w-32 h-32 bg-brand-cyan rounded-full opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500"
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0 }}
@@ -72,7 +73,7 @@ export default function Projects() {
                 whileHover={{ opacity: 0.1, scale: 1.2 }}
                 transition={{ duration: 0.8 }}
               />
-              
+
               {/* Content */}
               <div className="relative p-8">
                 <div className="flex flex-col h-full">
@@ -82,11 +83,11 @@ export default function Projects() {
                   <p className="mt-3 text-sm text-neutral-light/90 dark:text-neutral-dark/90 leading-relaxed">
                     {project.description}
                   </p>
-                  
+
                   <div className="mt-6 flex flex-wrap gap-2">
                     {project.stack.map((tech) => (
-                      <span 
-                        key={tech} 
+                      <span
+                        key={tech}
                         className="text-xs px-3 py-1 rounded-full bg-white/[0.03] dark:bg-white/[0.05] border border-white/10 text-brand-light"
                       >
                         {tech}
@@ -112,8 +113,8 @@ export default function Projects() {
                     <h4 className="font-semibold text-brand-cyan">Achievements</h4>
                     <ul className="mt-3 space-y-2">
                       {project.achievements.map((achievement) => (
-                        <li 
-                          key={achievement} 
+                        <li
+                          key={achievement}
                           className="text-sm text-neutral-light/80 dark:text-neutral-dark/80 pl-4 relative before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-gradient-brand before:rounded-full"
                         >
                           {achievement}
@@ -123,22 +124,24 @@ export default function Projects() {
                   </div>
 
                   <div className="mt-8 flex items-center gap-4">
-                    <a 
+                    <MagneticLink
                       href={project.liveUrl}
                       target="_blank"
-                      rel="noopener noreferrer" 
-                      className="flex-1 text-center text-sm font-medium px-4 py-2.5 rounded-xl bg-gradient-brand text-white shadow-lg shadow-brand-light/20 hover:-translate-y-0.5 transition-transform"
+                      rel="noopener noreferrer"
+                      className="flex-1 text-center text-sm font-medium px-4 py-2.5 rounded-xl magnetic-link"
+                      variant="primary"
                     >
                       View Live
-                    </a>
-                    <a 
+                    </MagneticLink>
+                    <MagneticLink
                       href={project.codeUrl}
                       target="_blank"
-                      rel="noopener noreferrer" 
-                      className="flex-1 text-center text-sm font-medium px-4 py-2.5 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/10 hover:bg-white/[0.05] transition-colors"
+                      rel="noopener noreferrer"
+                      className="flex-1 text-center text-sm font-medium px-4 py-2.5 rounded-xl magnetic-link"
+                      variant="secondary"
                     >
                       View Code
-                    </a>
+                    </MagneticLink>
                   </div>
                 </div>
               </div>

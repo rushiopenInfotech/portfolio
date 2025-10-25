@@ -1,5 +1,6 @@
+import { useEffect, useRef, type MouseEvent } from 'react'
 import { skills } from '../data/skills'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform, type MotionStyle } from 'framer-motion'
 import AwsIcon from './icons/AwsIcon'
 
 
@@ -24,6 +25,114 @@ const categories = {
   database: "Database Management",
   devops: "DevOps & Cloud"
 } as const
+
+type SkillItem = (typeof skills)[number]
+
+interface MagneticSkillCardProps {
+  skill: SkillItem
+  variants: typeof item
+}
+
+function MagneticSkillCard({ skill, variants }: MagneticSkillCardProps) {
+  const particleFieldRef = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springConfig = { stiffness: 220, damping: 20, mass: 0.5 }
+  const springX = useSpring(x, springConfig)
+  const springY = useSpring(y, springConfig)
+  const rotateX = useTransform(springY, [-25, 25], [10, -10])
+  const rotateY = useTransform(springX, [-25, 25], [-10, 10])
+
+  useEffect(() => {
+    if (!particleFieldRef.current) return
+
+    const particleField = particleFieldRef.current
+    const particleCount = 25
+
+    particleField.innerHTML = ''
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div')
+      particle.className = 'particle'
+
+      const offsetX = Math.random() * 200 - 100
+      const offsetY = Math.random() * 200 - 100
+      const duration = 1.2 + Math.random() * 1.5
+
+      particle.style.setProperty('--x', `${offsetX}px`)
+      particle.style.setProperty('--y', `${offsetY}px`)
+      particle.style.setProperty('--duration', `${duration}s`)
+      particle.style.left = `${Math.random() * 100}%`
+      particle.style.top = `${Math.random() * 100}%`
+
+      particleField.appendChild(particle)
+    }
+  }, [])
+
+  const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const offsetX = event.clientX - rect.left - rect.width / 2
+    const offsetY = event.clientY - rect.top - rect.height / 2
+
+    x.set(offsetX * 0.15)
+    y.set(offsetY * 0.15)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  const magneticStyles: MotionStyle = {
+    x: springX,
+    y: springY,
+    rotateX,
+    rotateY,
+    transformPerspective: 800,
+  }
+
+  return (
+    <motion.div
+      variants={variants}
+      className="magnetic-card group relative overflow-visible"
+      style={magneticStyles}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.03 }}
+    >
+      <div className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl dark:shadow-black/20" />
+      <div className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-10 rounded-2xl blur transition-opacity duration-300" />
+      <div className="particles-field" ref={particleFieldRef} />
+
+      <div className="relative z-10 p-6 flex flex-col items-center gap-4">
+        <div className="w-16 h-16 flex items-center justify-center mb-2">
+          {skill.icon === 'component:aws' ? (
+            <div
+              className={`w-12 h-12 group-hover:scale-110 transition-transform duration-300 ${
+                skill.name === 'AWS' ? 'text-[#252f3e] dark:text-white' : ''
+              }`}
+            >
+              <AwsIcon />
+            </div>
+          ) : skill.icon === 'component:hetzner' ? (
+            <div className="w-12 h-12 group-hover:scale-110 transition-transform duration-300" />
+          ) : (
+            <img
+              src={skill.icon}
+              alt={`${skill.name} logo`}
+              className={`w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300 ${
+                skill.name === 'Tailwind CSS' ? 'dark:invert' : 'dark:brightness-90'
+              }`}
+            />
+          )}
+        </div>
+        <span className="text-base font-medium text-neutral-light dark:text-neutral-dark group-hover:text-brand-light transition-colors">
+          {skill.name}
+        </span>
+      </div>
+    </motion.div>
+  )
+}
 
 export default function Skills() {
   // Group skills by category
@@ -96,46 +205,7 @@ export default function Skills() {
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 max-w-6xl mx-auto  sm:flex "
               >
                 {categorySkills.map((skill) => (
-                  <motion.div
-                    key={skill.name}
-                    variants={item}
-                    whileHover={{ y: -5 }}
-                    className="group relative"
-                  >
-                    {/* Card background with glassmorphism */}
-                    <div className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl dark:shadow-black/20" />
-                    
-                    {/* Decorative gradient */}
-                    <div className="absolute inset-0 bg-gradient-brand opacity-0 group-hover:opacity-10 rounded-2xl blur transition-opacity duration-300" />
-                    
-                    {/* Content */}
-                    <div className="relative p-6 flex flex-col items-center gap-4">
-                      <div className="w-16 h-16 flex items-center justify-center mb-2">
-                        {skill.icon === "component:aws" ? (
-                          <div className={`w-12 h-12 group-hover:scale-110 transition-transform duration-300 ${
-                            skill.name === "AWS" ? "text-[#252f3e] dark:text-white" : ""
-                          }`}>
-                            <AwsIcon />
-                          </div>
-                        ) : skill.icon === "component:hetzner" ? (
-                          <div className="w-12 h-12 group-hover:scale-110 transition-transform duration-300">
-                            
-                          </div>
-                        ) : (
-                          <img 
-                            src={skill.icon} 
-                            alt={`${skill.name} logo`}
-                            className={`w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300 ${
-                              skill.name === "Tailwind CSS" ? "dark:invert" : "dark:brightness-90"
-                            }`}
-                          />
-                        )}
-                      </div>
-                      <span className="text-base font-medium text-neutral-light dark:text-neutral-dark group-hover:text-brand-light transition-colors">
-                        {skill.name}
-                      </span>
-                    </div>
-                  </motion.div>
+                  <MagneticSkillCard key={skill.name} skill={skill} variants={item} />
                 ))}
               </motion.div>
             </motion.div>
